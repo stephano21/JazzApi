@@ -1,0 +1,6 @@
+@JazzApi_HostAddress = http://localhost:5244
+
+GET {{JazzApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
