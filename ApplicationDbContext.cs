@@ -12,6 +12,7 @@ namespace JazzApi
         {
         }
         public virtual DbSet<LogDB> Log { get; set; }
+        public virtual DbSet<Profile> Profile { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

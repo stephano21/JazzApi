@@ -3,6 +3,7 @@ using System;
 using JazzApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JazzApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240302170111_Jazz.000.003")]
+    partial class Jazz000003
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,7 +143,7 @@ namespace JazzApi.Migrations
                     b.ToTable("Log", "AUTH");
                 });
 
-            modelBuilder.Entity("JazzApi.Entities.Auth.Profile", b =>
+            modelBuilder.Entity("JazzApi.Entities.Auth.Porfile", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -156,7 +159,7 @@ namespace JazzApi.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Profile", "AUTH");
+                    b.ToTable("Porfile", "AUTH");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -291,11 +294,11 @@ namespace JazzApi.Migrations
                     b.ToTable("UsersToken", "AUTH");
                 });
 
-            modelBuilder.Entity("JazzApi.Entities.Auth.Profile", b =>
+            modelBuilder.Entity("JazzApi.Entities.Auth.Porfile", b =>
                 {
                     b.HasOne("JazzApi.Entities.Auth.ApplicationUser", "User")
-                        .WithOne("Profile")
-                        .HasForeignKey("JazzApi.Entities.Auth.Profile", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -350,12 +353,6 @@ namespace JazzApi.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("JazzApi.Entities.Auth.ApplicationUser", b =>
-                {
-                    b.Navigation("Profile")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

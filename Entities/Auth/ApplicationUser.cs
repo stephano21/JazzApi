@@ -6,10 +6,10 @@ namespace JazzApi.Entities.Auth
 {
     public class ApplicationUser : IdentityUser
     {
+        public bool PasswordExpired { get; set; }= false;
+        public bool Lock { get; set; }= false;
         [Required]
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public bool Bloqueo { get; set; }
-        
+        public Profile Profile { get; set; }
+
     }
 }

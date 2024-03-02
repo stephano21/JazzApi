@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using JazzApi.Manager;
 
 namespace JazzApi
 {
@@ -55,6 +56,19 @@ namespace JazzApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"])),
                     ClockSkew = TimeSpan.Zero
                 });
+            // IDENTITY (USER SYSTEM)
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            //Security on login
+            services.AddScoped<ApplicationUserManager>();
+            services.AddScoped<SignInManager<ApplicationUser>>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 3; // Número de intentos fallidos permitidos antes de bloquear la cuenta
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60); // Duración del bloqueo de cuenta
+            });
             //SWAGGER
             services.AddSwaggerGen(c =>
             {
@@ -115,8 +129,7 @@ namespace JazzApi
                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DATABASE_URL")));
             }
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            
             services.AddSignalR();
 
         }
