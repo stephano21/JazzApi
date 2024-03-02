@@ -16,7 +16,7 @@ namespace JazzApi.Filters
         {
             this.configuration = configuration;
             this.logger = logger;
-            //_context = context;
+            _context = context;
         }
         public override async Task OnExceptionAsync(ExceptionContext context)
         {
@@ -40,13 +40,13 @@ namespace JazzApi.Filters
                 var log = new LogDB();
                 log.RequestID = Activity.Current?.Id;
                 log.RequestTraceIdentifier = context.HttpContext.TraceIdentifier;
-                log.Fecha = DateTime.Now;
+                log.Fecha = DateTime.UtcNow;
                 log.Controller = context.ActionDescriptor.RouteValues["controller"];
                 log.Endpoint = context.ActionDescriptor.DisplayName;
                 log.Message = context.Exception.Message;
                 log.StackTrace = context.Exception.StackTrace;
                 log.InnerException = context.Exception?.InnerException?.ToString() ?? "";
-                log.Ambiente = configuration["Ambiente"];
+                log.Ambiente = configuration["Env"];
                 log.Usuario = context.HttpContext.Request.Cookies["username"];
                 log.Plataform = "API";
                 await _context.Log.AddAsync(log);

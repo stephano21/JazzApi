@@ -12,7 +12,9 @@ namespace JazzApi.Controllers.Auth
     {
         private readonly ApplicationUserManager _userManager;
 
-        public AuthController( ApplicationUserManager ApplicationUserManager, IConfiguration IConfiguration)
+        public AuthController( ApplicationUserManager ApplicationUserManager, 
+            IConfiguration IConfiguration,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = ApplicationUserManager;
         }
@@ -20,6 +22,7 @@ namespace JazzApi.Controllers.Auth
         public async Task<ActionResult> LoginAsync(LoginDTO data) => Ok(await _userManager.LoginUserAsync(data));
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterDTO UserData) => Ok(await _userManager.RegisterUserAsync(UserData));
-        
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)=> Ok(await _userManager.ConfirmEmail(userId, code));
     }
 }

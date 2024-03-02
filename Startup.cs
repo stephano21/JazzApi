@@ -56,8 +56,18 @@ namespace JazzApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"])),
                     ClockSkew = TimeSpan.Zero
                 });
+            //HttpContextAccessor
+            services.AddHttpContextAccessor();
+            //DataProtectionTokenProviderOptions
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromHours(24); // o el tiempo que desees
+            });
+
             // IDENTITY (USER SYSTEM)
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             //Security on login

@@ -1,12 +1,16 @@
 ﻿using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
+using JazzApi.Templates;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JazzApi.Manager
 {
@@ -17,7 +21,9 @@ namespace JazzApi.Manager
         private readonly IServiceProvider services;
         private readonly IConfiguration configuration;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public ApplicationUserManager(
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly Services.MailService.MailService.MailRepository _mailManager;
+        public ApplicationUserManager(IHttpContextAccessor httpContextAccessor,
            IConfiguration IConfiguration,
            SignInManager<ApplicationUser> signInManager,
            IUserStore<ApplicationUser> store,
@@ -45,6 +51,9 @@ namespace JazzApi.Manager
             configuration = IConfiguration;
             this.services = services;
             this.signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
+            _mailManager = new Services.MailService.MailService.MailRepository(configuration);
+
         }
         public async Task<bool> RegisterUserAsync(RegisterDTO UserData)
         {
@@ -82,34 +91,44 @@ namespace JazzApi.Manager
             result = await AddClaimAsync(usuario, roleClaim);
 
             if (!result.Succeeded) return false;
-
+            var EmailAddress = new List<string>
+                    {
+                        usuario.Email,
+                    };
+            var code = await GenerateEmailConfirmationTokenAsync(usuario);
+            var callbackUrl = await GenerateConfirmationUrlAsync(usuario);
+            var plantilla = ConfirmEmailTemplate.Template($"Confirmacion de correo para {usuario.UserName}", callbackUrl,
+                "Confirma tu direccion de correo electronico en el sigueinte enlace!");
+            var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
+            if(!DeliveredMail.Successful) return false;
             return true;
         }
 
         public async Task<LoggedUser> LoginUserAsync(LoginDTO credencialesUsuario)
         {
-            try
+            if( string.IsNullOrEmpty(credencialesUsuario.Username)|| string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
+            var usuario = await FindByNameAsync(credencialesUsuario.Username);
+            if (usuario != null && !usuario.Lock)
             {
-                var usuario = await FindByNameAsync(credencialesUsuario.Username);
+                var resultado = await signInManager.PasswordSignInAsync(credencialesUsuario.Username, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: true);
 
-                if (usuario != null && !usuario.Lock)
+                if (resultado.Succeeded)
                 {
-                    var resultado = await signInManager.PasswordSignInAsync(credencialesUsuario.Username, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: true);
-
-                    if (resultado.Succeeded)
-                    {
-                        return await ConstruirToken(credencialesUsuario);
-                    }
-                    if (resultado.IsLockedOut) throw new Exception("Cuenta bloqueada temporalmente");
-
+                    return await ConstruirToken(credencialesUsuario);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al iniciar sesión");
+                if (resultado.IsLockedOut) throw new Exception("Cuenta bloqueada temporalmente");
+                if (resultado.IsNotAllowed) throw new Exception("Valide su correo para luego iniciarsesion!");
             }
 
             throw new Exception("Credenciales Inválidas");
+        }
+        private async Task<string> GenerateConfirmationUrlAsync(ApplicationUser user)
+        {
+            var code = await GenerateEmailConfirmationTokenAsync(user);
+
+            // Construct the confirmation URL manually
+            var baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
+            return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
         }
         private async Task<LoggedUser> ConstruirToken(LoginDTO credencialesUsuario)
         {
@@ -166,5 +185,13 @@ namespace JazzApi.Manager
                 throw;
             }
         }
+        public async Task<bool> ConfirmEmail(string userId, string code)
+        {
+            var user = await FindByIdAsync(userId);
+            if (user == null) throw new Exception("Usuario no encontrado");
+            var result = await ConfirmEmailAsync(user, code);
+            if (result.Succeeded) return true;
+            throw new Exception($"Error al confirmar el correo");
+        }   
     }
 }

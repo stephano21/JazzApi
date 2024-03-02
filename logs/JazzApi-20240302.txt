@@ -99,3 +99,446 @@ InnerException:
 
 
 2024-03-02 15:23:40.057 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:26:38.005 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-7b43f2e65f5f4af076b3fbec631573e0-d130defd7070ac5a-00
+Request TraceIdentifier: 400003e0-0009-fd00-b63f-84710c7967bb
+Date: 03/02/2024 15:26:34
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:26:38.010 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:27:46.788 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-c5079136be7545d5bc3e2efac80a830a-8ca56786dc3ff9cc-00
+Request TraceIdentifier: 400001da-0002-f800-b63f-84710c7967bb
+Date: 03/02/2024 15:26:42
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:27:46.799 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:27:53.699 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-3c53cd4f240b600d80b5f64eea2db15e-f63a49488dabe73a-00
+Request TraceIdentifier: 40000528-0000-f400-b63f-84710c7967bb
+Date: 03/02/2024 15:27:51
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Error al iniciar sesión
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:27:53.701 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:28:00.676 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-af0483978cf3a9f83003dcf3e6e46751-9889cd56a9c4a4bb-00
+Request TraceIdentifier: 40000613-0008-fd00-b63f-84710c7967bb
+Date: 03/02/2024 15:27:57
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Error al iniciar sesión
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:28:00.678 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:28:12.681 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-94f8522c3e59e3460020aacbaf2d5a82-30771ab36186794b-00
+Request TraceIdentifier: 4000052a-0000-f400-b63f-84710c7967bb
+Date: 03/02/2024 15:28:05
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Error al iniciar sesión
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:28:12.686 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:29:02.677 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-e07090e1c999e3068527fbda2c837ea7-28c8ceec4def52aa-00
+Request TraceIdentifier: 40000615-0008-fd00-b63f-84710c7967bb
+Date: 03/02/2024 15:29:00
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Error al iniciar sesión
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method205(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:29:02.680 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:30:32.972 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-325b21dd78a75a3e39995ed515457866-62fb5d9f1c55a4a6-00
+Request TraceIdentifier: 400008cb-0000-f800-b63f-84710c7967bb
+Date: 03/02/2024 15:30:29
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:30:32.976 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:30:53.675 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-c2adcba9d3d9a7b93990589789571f5d-e894d57dc3442875-00
+Request TraceIdentifier: 400008cd-0000-f800-b63f-84710c7967bb
+Date: 03/02/2024 15:30:51
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:30:53.677 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:31:22.565 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-7b05f68d1d294560f547d227a98da5cc-593a5bff2704e7a0-00
+Request TraceIdentifier: 400001ee-0007-fa00-b63f-84710c7967bb
+Date: 03/02/2024 15:31:08
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:31:22.569 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:31:43.537 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-7757a268935de41fbca51dcf5b12ea91-b05da80da0505d5b-00
+Request TraceIdentifier: 4000052e-0000-f400-b63f-84710c7967bb
+Date: 03/02/2024 15:31:41
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:31:43.539 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:32:09.319 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-81dfea5a528d33746015c113301be911-a9b3700fe5dc93bf-00
+Request TraceIdentifier: 400004be-0008-f200-b63f-84710c7967bb
+Date: 03/02/2024 15:32:07
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:32:09.322 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:32:16.186 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-af4918c2ae9b9c23a39cb70aff2e93d1-4c991030c29c5a2e-00
+Request TraceIdentifier: 400003c5-0007-f400-b63f-84710c7967bb
+Date: 03/02/2024 15:32:14
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:32:16.189 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:32:22.385 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-350b0be977069ad13e5dd9a746b32102-07379d2f2c005fd6-00
+Request TraceIdentifier: 400004c0-0008-f200-b63f-84710c7967bb
+Date: 03/02/2024 15:32:20
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Cuenta bloqueada temporalmente
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method291(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:32:22.389 -05:00 [ERR] Object reference not set to an instance of an object.
+2024-03-02 15:34:46.811 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-532106fd0df50cd5657bf6c46a28c92c-8368b4fa53d8ff57-00
+Request TraceIdentifier: 4000054a-000a-fa00-b63f-84710c7967bb
+Date: 03/02/2024 15:34:46
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method300(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:34:46.815 -05:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
+2024-03-02 15:35:09.187 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-1dc264bda25f2af24bfa046b1b559045-4a142d03994add0e-00
+Request TraceIdentifier: 400007f0-0004-f900-b63f-84710c7967bb
+Date: 03/02/2024 15:35:09
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method300(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:35:09.190 -05:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
+2024-03-02 15:35:25.304 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-8f0c819477975bd65ff6302508ebcdbf-c4dfc81c58f7724a-00
+Request TraceIdentifier: 4000054c-000a-fa00-b63f-84710c7967bb
+Date: 03/02/2024 15:35:25
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method300(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:35:25.306 -05:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
+2024-03-02 15:36:56.630 -05:00 [ERR] 
+
+----------------------------ERROR-JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)----------------------------------
+Request ID: 00-91b6c5cf16a764744700acb92a104efe-bd41f183c956cc7b-00
+Request TraceIdentifier: 400004c5-0008-f200-b63f-84710c7967bb
+Date: 03/02/2024 15:35:57
+Controller: Auth
+Endpoint: JazzApi.Controllers.Auth.AuthController.LoginAsync (JazzApi)
+Message: Credenciales Inválidas
+StackTrace:    at JazzApi.Manager.ApplicationUserManager.LoginUserAsync(LoginDTO credencialesUsuario)
+   at JazzApi.Controllers.Auth.AuthController.LoginAsync(LoginDTO data)
+   at lambda_method300(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+Usuario: schang@apptelink.com
+InnerException: 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
+2024-03-02 15:36:56.635 -05:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
