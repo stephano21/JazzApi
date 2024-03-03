@@ -7,7 +7,9 @@ namespace JazzApi.DTOs.Auth
     }
     public class LoginDTO
     {
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
     }
     public class RegisterDTO:UserDTO
@@ -19,6 +21,7 @@ namespace JazzApi.DTOs.Auth
     {
         [Required]
         public string UserName { get; set; }
+        [EmailAddress]
         [Required]
         public string Email { get; set; }
         public string Role { get; set; }="User";

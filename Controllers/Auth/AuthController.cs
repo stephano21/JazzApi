@@ -19,9 +19,9 @@ namespace JazzApi.Controllers.Auth
             _userManager = ApplicationUserManager;
         }
         [HttpPost("login")]
-        public async Task<ActionResult> LoginAsync(LoginDTO data) => Ok(await _userManager.LoginUserAsync(data));
+        public async Task<ActionResult> LoginAsync([FromBody]LoginDTO data) => Ok(await _userManager.LoginUserAsync(data));
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterAsync(RegisterDTO UserData) => Ok(await _userManager.RegisterUserAsync(UserData));
+        public async Task<ActionResult> RegisterAsync([FromBody] RegisterDTO UserData) => Ok(await _userManager.RegisterUserAsync(UserData));
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)=> Ok(await _userManager.ConfirmEmail(userId, code));
     }

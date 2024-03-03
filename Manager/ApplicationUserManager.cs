@@ -1,16 +1,13 @@
 ﻿using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
 using JazzApi.Templates;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Policy;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JazzApi.Manager
 {
@@ -106,7 +103,7 @@ namespace JazzApi.Manager
 
         public async Task<LoggedUser> LoginUserAsync(LoginDTO credencialesUsuario)
         {
-            if( string.IsNullOrEmpty(credencialesUsuario.Username)|| string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
+            if( string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
             if (usuario != null && !usuario.Lock)
             {
