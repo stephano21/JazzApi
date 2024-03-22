@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static JazzApi.Entities.Auth.LogDB;
 using JazzApi.Entities.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using JazzApi.Entities.Reto;
 
 namespace JazzApi
 {
@@ -13,6 +13,7 @@ namespace JazzApi
         }
         public virtual DbSet<LogDB> Log { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
+        public virtual DbSet<TaskNotes> TaskNotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

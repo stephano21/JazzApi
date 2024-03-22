@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JazzApi.Entities.Reto;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JazzApi.Entities.Auth
@@ -13,5 +14,6 @@ namespace JazzApi.Entities.Auth
         public string LastName { get; set; }
         public string NickName { get; set; }
         public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<TaskNotes> Tasks { get; set; }
     }
 }
