@@ -16,7 +16,7 @@ namespace JazzApi.Controllers.Reto
         [HttpGet("Task")]
         public ActionResult Index()=> Ok(_manager.Get());
         [HttpPost("Task")]
-        public ActionResult Save(TaskDTO data) => Ok( _manager.Save(data));
+        public ActionResult Save([FromBody]TaskDTO data) => Ok( _manager.Save(data));
         [HttpPut("Task")]
         public ActionResult Edit(TaskDTO data) => Ok(_manager.Save(data));
         [HttpDelete("Task")]

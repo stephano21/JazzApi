@@ -1,6 +1,7 @@
 ﻿using JazzApi.Entities.Auth;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace JazzApi.Entities.Reto
 {
@@ -13,6 +14,7 @@ namespace JazzApi.Entities.Reto
         public string Description { get; set; }
         [ForeignKey("Profile")]
         public string UserId { get; set; }
+        [JsonIgnore]
         public virtual Profile Profile { get; set; }
     }
 }

@@ -111,7 +111,7 @@ namespace JazzApi.Manager
 
                 if (resultado.Succeeded)
                 {
-                    return await ConstruirToken(credencialesUsuario);
+                    return await ConstruirTokenv2(credencialesUsuario);
                 }
                 if (resultado.IsLockedOut) throw new Exception("Cuenta bloqueada temporalmente");
                 if (resultado.IsNotAllowed) throw new Exception("Valide su correo para luego iniciarsesion!");
@@ -127,36 +127,36 @@ namespace JazzApi.Manager
             var baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
             return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
         }
-        private async Task<LoggedUser> ConstruirToken(LoginDTO credencialesUsuario)
-        {
-            var usuario = await FindByNameAsync(credencialesUsuario.Username);
-            //realmente el claim seria username
-            var claims = new List<Claim>()
-            {
-                new Claim("Username", credencialesUsuario.Username),
+        //private async Task<LoggedUser> ConstruirToken(LoginDTO credencialesUsuario)
+        //{
+        //    var usuario = await FindByNameAsync(credencialesUsuario.Username);
+        //    //realmente el claim seria username
+        //    var claims = new List<Claim>()
+        //    {
+        //        new Claim("Username", credencialesUsuario.Username),
 
-            };
-            // Obtener roles del usuario
-            var roles = await GetRolesAsync(usuario);
-            foreach (var rol in roles)
-            {
-                claims.Add(new Claim("Role", rol));
-            }
+        //    };
+        //    // Obtener roles del usuario
+        //    var roles = await GetRolesAsync(usuario);
+        //    foreach (var rol in roles)
+        //    {
+        //        claims.Add(new Claim("Role", rol));
+        //    }
 
-            var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"]));
-            var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
-            var expiracion = DateTime.UtcNow.AddDays(1);
+        //    var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"]));
+        //    var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
+        //    var expiracion = DateTime.UtcNow.AddDays(1);
 
-            var securtityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiracion, signingCredentials: creds);
+        //    var securtityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiracion, signingCredentials: creds);
 
-            return new LoggedUser()
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(securtityToken),
-                Rol = await GetRole(usuario),
-                Expiracion = expiracion,
-                Ambiente = configuration["Env"]
-            };
-        }
+        //    return new LoggedUser()
+        //    {
+        //        AccessToken = new JwtSecurityTokenHandler().WriteToken(securtityToken),
+        //        Role = await GetRole(usuario),
+        //        Expiracion = expiracion,
+        //        Env = configuration["Env"]
+        //    };
+        //}
         public async Task<string> GetRole(ApplicationUser user)
         {
             try
@@ -189,6 +189,46 @@ namespace JazzApi.Manager
             var result = await ConfirmEmailAsync(user, code);
             if (result.Succeeded) return true;
             throw new Exception($"Error al confirmar el correo");
-        }   
+        }
+        private async Task<LoggedUser> ConstruirTokenv2(LoginDTO credencialesUsuario)
+        {
+            var usuario = await FindByNameAsync(credencialesUsuario.Username);
+
+            var claims = new List<Claim>()
+    {
+        new Claim("Username", credencialesUsuario.Username),
+    };
+
+            // Obtener roles del usuario
+            var roles = await GetRolesAsync(usuario);
+            foreach (var rol in roles)
+            {
+                claims.Add(new Claim("Role", rol));
+            }
+
+            var llaveAcceso = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"]));
+            var llaveActualizacion = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTRefreshKey"]));
+            var credsAcceso = new SigningCredentials(llaveAcceso, SecurityAlgorithms.HmacSha256);
+            var credsActualizacion = new SigningCredentials(llaveActualizacion, SecurityAlgorithms.HmacSha256);
+
+            var expiracion = DateTime.UtcNow.AddDays(1);
+
+            var accessToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiracion, signingCredentials: credsAcceso);
+            var refreshToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: DateTime.UtcNow.AddDays(7), signingCredentials: credsActualizacion);
+
+            return new LoggedUser()
+            {
+                Auth = new TokensDTO
+                {
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
+                    RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken)
+                }, 
+                Username = credencialesUsuario.Username,
+                Role = await GetRole(usuario),
+                Expiracion = expiracion,
+                Env = configuration["Env"]
+            };
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using JazzApi.DTOs.Reto;
 using JazzApi.Entities.Reto;
+using Microsoft.EntityFrameworkCore;
 
 namespace JazzApi.Manager
 {
@@ -18,16 +19,22 @@ namespace JazzApi.Manager
             UserId = x.UserId
         }).ToList();
         
-        public bool Save(TaskDTO data)
+        public async Task<bool> Save(TaskDTO data)
         {
+            data.Title = data.Title.Trim();
+            var ExisteTitle =await  _context.TaskNotes.Where(x => x.Title.ToLower() == data.Title.ToLower()).AnyAsync();
+            if (ExisteTitle)
+            {
+                throw new Exception("El titulo ya existe");
+            }
             var nuevo = new TaskNotes
             {
                 Title = data.Title,
                 Description = data.Description,
-                UserId = data.UserId
+                UserId = "syuste"
             };
-            _context.AddAsync(nuevo);
-            _context.SaveChangesAsync();
+            await _context.AddAsync(nuevo);
+            await _context.SaveChangesAsync();
             return true;
         }
         public bool Edit(TaskDTO data)

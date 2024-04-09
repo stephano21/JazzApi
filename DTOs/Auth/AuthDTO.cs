@@ -35,9 +35,15 @@ namespace JazzApi.DTOs.Auth
     }
     public class LoggedUser
     {
-        public string Token { get; set; }
-        public string Rol { get; set; }
+        public TokensDTO Auth { get; set; }
+        public string Username { get; set; }
+        public string Role { get; set; }
         public DateTime Expiracion { get; set; }
-        public string Ambiente { get; set; }
+        public string Env { get; set; }
+    }
+    public class TokensDTO
+    {
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
     }
 }
