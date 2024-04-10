@@ -220,8 +220,8 @@ namespace JazzApi.Manager
             {
                 Auth = new TokensDTO
                 {
-                    AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
-                    RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken)
+                    Access_Token = new JwtSecurityTokenHandler().WriteToken(accessToken),
+                    Refresh_Token = new JwtSecurityTokenHandler().WriteToken(refreshToken)
                 }, 
                 Username = credencialesUsuario.Username,
                 Role = await GetRole(usuario),

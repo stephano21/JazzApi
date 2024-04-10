@@ -14,7 +14,7 @@ namespace JazzApi.Entities.Reto
         public string Description { get; set; }
         [ForeignKey("Profile")]
         public string UserId { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Profile Profile { get; set; }
     }
 }

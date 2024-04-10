@@ -7,17 +7,24 @@ namespace JazzApi.Manager
     public class TaskManager
     {
         private readonly ApplicationDbContext _context;
-        public TaskManager(ApplicationDbContext Context)
+        private readonly string _User;
+        private readonly string _Ip;
+        private readonly string _IdUser;
+        public TaskManager(ApplicationDbContext Context, string Username, string Ip, string idUser)
         {
             _context = Context;
+            _IdUser = idUser;
+            _User = Username;
+            _Ip = Ip;
+            _IdUser = idUser;
         }
-        public List<TaskDTO> Get() => _context.TaskNotes.Select(x => new TaskDTO
+        public async Task<List<TaskDTO>> Get() =>await _context.TaskNotes.Select(x => new TaskDTO
         {
             Id = x.Id,
             Title = x.Title,
             Description = x.Description,
             UserId = x.UserId
-        }).ToList();
+        }).ToListAsync();
         
         public async Task<bool> Save(TaskDTO data)
         {
@@ -31,9 +38,9 @@ namespace JazzApi.Manager
             {
                 Title = data.Title,
                 Description = data.Description,
-                UserId = "syuste"
+                UserId = _IdUser.ToString(),
             };
-            await _context.AddAsync(nuevo);
+            await _context.TaskNotes.AddAsync(nuevo);
             await _context.SaveChangesAsync();
             return true;
         }
