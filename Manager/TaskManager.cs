@@ -44,17 +44,34 @@ namespace JazzApi.Manager
             await _context.SaveChangesAsync();
             return true;
         }
-        public bool Edit(TaskDTO data)
+        public async Task<bool> Edit(TaskDTO data)
         {
-            var nuevo = new TaskNotes
+           var duplicate =await _context.TaskNotes.Where(x => x.Title.ToLower() == data.Title.ToLower() && x.Id != data.Id).AnyAsync();
+            if (duplicate)
             {
-                Title = data.Title,
-                Description = data.Description,
-                UserId = data.UserId
-            };
-            _context.AddAsync(nuevo);
-            _context.SaveChangesAsync();
+                throw new Exception("El titulo ya existe");
+            }
+           var Existe =await _context.TaskNotes.Where(x => x.Id == data.Id).FirstOrDefaultAsync();
+            if (Existe == null)
+            {
+                throw new Exception("No existe el registro");
+            }
+            Existe.Title = data.Title;
+            Existe.Description = data.Description;
+            _context.TaskNotes.Update(Existe);
+            await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> Delete(long Id)
+        {
+            var Existe =await _context.TaskNotes.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (Existe == null)
+            {
+                throw new Exception("No existe el registro");
+            }
+            _context.TaskNotes.Remove(Existe);
+            await _context.SaveChangesAsync();
+            return true;
+        }   
     }
 }

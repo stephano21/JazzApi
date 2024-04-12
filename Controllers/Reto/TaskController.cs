@@ -30,9 +30,9 @@ namespace JazzApi.Controllers.Reto
         [HttpPost("Task")]
         public async Task<ActionResult> SaveAsync([FromBody] TaskDTO data) => Ok(await _manager.Save(data));
         [HttpPut("Task")]
-        public async Task<ActionResult> EditAsync(TaskDTO data) => Ok(await _manager.Save(data));
-        [HttpDelete("Task")]
-        public ActionResult Delete(long Id) => Ok();
+        public async Task<ActionResult> EditAsync(TaskDTO data) => Ok(await _manager.Edit(data));
+        [HttpDelete("Task/{Id:long}")]
+        public async Task<ActionResult> DeleteAsync(long Id) => Ok(await _manager.Delete(Id));
 
     }
 }
