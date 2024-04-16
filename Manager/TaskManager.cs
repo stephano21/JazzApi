@@ -18,7 +18,7 @@ namespace JazzApi.Manager
             _Ip = Ip;
             _IdUser = idUser;
         }
-        public async Task<List<TaskDTO>> Get() =>await _context.TaskNotes.Select(x => new TaskDTO
+        public async Task<List<TaskDTO>> Get() =>await _context.TaskNotes.Where(x=> x.UserId.Equals(_IdUser)).Select(x => new TaskDTO
         {
             Id = x.Id,
             Title = x.Title,

@@ -128,6 +128,7 @@ namespace JazzApi
             Console.WriteLine($"ConnectionString: {connectionString}");
             var url = Environment.GetEnvironmentVariable("DATABASE_URL");
             Console.WriteLine($"ConnectionString2: {url}");
+            Console.WriteLine($"Ambiente: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
@@ -136,7 +137,7 @@ namespace JazzApi
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DATABASE_URL")));
+               options.UseNpgsql(Configuration.GetConnectionString("DATABASE_URL")));
             }
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             
