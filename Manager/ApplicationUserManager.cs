@@ -121,10 +121,20 @@ namespace JazzApi.Manager
         }
         private async Task<string> GenerateConfirmationUrlAsync(ApplicationUser user)
         {
+            var SITE = Environment.GetEnvironmentVariable("SITE");
             var code = await GenerateEmailConfirmationTokenAsync(user);
+            var baseUrl = "";
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                baseUrl = $"{SITE}";
+            }
+            else
+            {
+                // Construct the confirmation URL manually
+                baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
 
-            // Construct the confirmation URL manually
-            var baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
+            }
+
             return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
         }
         //private async Task<LoggedUser> ConstruirToken(LoginDTO credencialesUsuario)
