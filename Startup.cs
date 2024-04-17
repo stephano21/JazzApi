@@ -131,17 +131,20 @@ namespace JazzApi
             Console.WriteLine($"Ambiente: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
             {
+                Console.WriteLine("dev");
+
                 services.AddDbContext<ApplicationDbContext>(options =>
                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             }
             else
             {
+                Console.WriteLine("prod");
                 services.AddDbContext<ApplicationDbContext>(options =>
                options.UseNpgsql(Configuration.GetConnectionString("DATABASE_URL")));
             }
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             
-            //services.AddSignalR();
+            services.AddSignalR();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
