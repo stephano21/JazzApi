@@ -141,7 +141,7 @@ namespace JazzApi
             }
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             
-            services.AddSignalR();
+            //services.AddSignalR();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
