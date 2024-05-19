@@ -121,7 +121,7 @@ namespace JazzApi.Manager
         }
         private async Task<string> GenerateConfirmationUrlAsync(ApplicationUser user)
         {
-            var SITE = Environment.GetEnvironmentVariable("SITE");
+            var SITE = Environment.GetEnvironmentVariable("SITE")?? configuration["SITE"];
             var code = await GenerateEmailConfirmationTokenAsync(user);
             var baseUrl = "";
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")

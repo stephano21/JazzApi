@@ -55,7 +55,7 @@ namespace JazzApi
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey =  new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"] ?? Environment.GetEnvironmentVariable("JWTKey"))),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"] ?? Environment.GetEnvironmentVariable("JWTKey"))),
                         ClockSkew = TimeSpan.Zero
                     });
                 //HttpContextAccessor
@@ -127,12 +127,12 @@ namespace JazzApi
                     c.IncludeXmlComments(rutaXML);
                 });
                 //Configure Database
-                var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                var connectionString = Configuration.GetConnectionString("DefaultConnection") ?? "";
                 Console.WriteLine($"ConnectionString: {connectionString}");
                 var url = Environment.GetEnvironmentVariable("DATABASE_URL");
                 Console.WriteLine($"ConnectionString2: {url}");
                 Console.WriteLine($"Ambiente: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
-                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
                 {
                     Console.WriteLine("dev");
 
@@ -161,14 +161,17 @@ namespace JazzApi
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
+                
                 var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
             }
+
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
