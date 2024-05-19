@@ -216,8 +216,8 @@ namespace JazzApi.Manager
                 claims.Add(new Claim("Role", rol));
             }
 
-            var llaveAcceso = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"]));
-            var llaveActualizacion = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTRefreshKey"]));
+            var llaveAcceso = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"] ?? Environment.GetEnvironmentVariable("JWTKey")));
+            var llaveActualizacion = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTRefreshKey"] ?? Environment.GetEnvironmentVariable("JWTRefreshKey")));
             var credsAcceso = new SigningCredentials(llaveAcceso, SecurityAlgorithms.HmacSha256);
             var credsActualizacion = new SigningCredentials(llaveActualizacion, SecurityAlgorithms.HmacSha256);
 
@@ -236,7 +236,7 @@ namespace JazzApi.Manager
                 Username = credencialesUsuario.Username,
                 Role = await GetRole(usuario),
                 Expiracion = expiracion,
-                Env = configuration["Env"]
+                Env = configuration["Env"]?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
             };
         }
 
