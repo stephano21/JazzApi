@@ -57,7 +57,6 @@ namespace JazzApi
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey =  new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"] ?? Environment.GetEnvironmentVariable("JWTKey"))),
                         ClockSkew = TimeSpan.Zero
-                        ClockSkew = TimeSpan.Zero
                     });
                 //HttpContextAccessor
                 services.AddHttpContextAccessor();
