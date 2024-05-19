@@ -143,7 +143,7 @@ namespace JazzApi
                 {
                     Console.WriteLine("prod");
                     services.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseNpgsql(Configuration.GetConnectionString("DATABASE_URL")));
+                   options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL")));
                     Console.WriteLine("prod");
                 }
                 services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
