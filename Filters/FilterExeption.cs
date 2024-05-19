@@ -54,6 +54,8 @@ namespace JazzApi.Filters
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Filter: {ex}");
+                Console.WriteLine($"Filter: {ex.Message}");
                 logger.LogError(logMessage);
                 logger.LogError(ex.Message);
             }
