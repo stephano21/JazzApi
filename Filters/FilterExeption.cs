@@ -46,7 +46,7 @@ namespace JazzApi.Filters
                 log.Message = context.Exception.Message;
                 log.StackTrace = context.Exception.StackTrace;
                 log.InnerException = context.Exception?.InnerException?.ToString() ?? "";
-                log.Ambiente = configuration["Env"];
+                log.Ambiente = configuration["Env"]?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 log.Usuario = context.HttpContext.Request.Cookies["username"];
                 log.Plataform = "API";
                 await _context.Log.AddAsync(log);

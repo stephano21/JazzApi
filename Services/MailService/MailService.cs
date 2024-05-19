@@ -17,7 +17,7 @@ namespace JazzApi.Services.MailService
                 int port;
                 bool ssl;
 
-                if (configuration["Env"] == "Production")
+                if ((configuration["Env"]?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")) == "Production")
                 {
                     _username = "trabajocolaborativo.pis@gmail.com";
                     password = "liou cfwa hgbz ndeu";
