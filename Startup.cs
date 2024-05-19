@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using JazzApi.Manager;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JazzApi
 {
@@ -55,7 +56,7 @@ namespace JazzApi
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"] ?? Environment.GetEnvironmentVariable("JWTKey"))),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTKey") ?? Configuration["JWTKey"])),
                         ClockSkew = TimeSpan.Zero
                     });
                 //HttpContextAccessor
@@ -67,6 +68,7 @@ namespace JazzApi
                 });
 
                 // IDENTITY (USER SYSTEM)
+                services.AddScoped<IdentityDbContext<ApplicationUser>, ApplicationDbContext>();
                 services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
@@ -147,7 +149,14 @@ namespace JazzApi
                     Console.WriteLine("prod");
                 }
                 services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-
+                //CORS
+                services.AddCors(opciones =>
+                {
+                    opciones.AddDefaultPolicy(policy =>
+                    {
+                        policy.WithOrigins("https://www.apirequest.io").AllowAnyMethod().AllowAnyHeader();
+                    });
+                });
                 services.AddSignalR();
             }
             catch (Exception ex)
