@@ -19,18 +19,18 @@ namespace JazzApi.Services.MailService
 
                 if ((Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? configuration["Env"]) == "Production")
                 {
-                    _username = "trabajocolaborativo.pis@gmail.com";
-                    password = "liou cfwa hgbz ndeu";
-                    host = "smtp.gmail.com";
-                    port = 587;
+                    _username = configuration["MailService:Email"] ?? Environment.GetEnvironmentVariable("Email");
+                    password = configuration["MailService:Password"] ?? Environment.GetEnvironmentVariable("Password");
+                    host = configuration["MailService:Host"] ?? Environment.GetEnvironmentVariable("Host");
+                    port = int.Parse(configuration["MailService:Port"] ?? Environment.GetEnvironmentVariable("Port"));
                     ssl = true;
                 }
                 else
                 {
-                    _username = "trabajocolaborativo.pis@gmail.com";
-                    password = "liou cfwa hgbz ndeu";
-                    host = "smtp.gmail.com";
-                    port = 587;
+                    _username = configuration["MailService:Email"] ?? Environment.GetEnvironmentVariable("Email");
+                    password = configuration["MailService:Password"] ?? Environment.GetEnvironmentVariable("Password");
+                    host = configuration["MailService:Host"] ?? Environment.GetEnvironmentVariable("Host");
+                    port = int.Parse(configuration["MailService:Port"] ?? Environment.GetEnvironmentVariable("Port"));
                     ssl = true;
                 }
 
