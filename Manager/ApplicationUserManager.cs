@@ -131,7 +131,8 @@ namespace JazzApi.Manager
             else
             {
                 // Construct the confirmation URL manually
-                baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
+                //baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
+                baseUrl = $"{SITE}";
 
             }
 
