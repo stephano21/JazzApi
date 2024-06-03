@@ -40,14 +40,14 @@ namespace JazzApi.Filters
                 var log = new LogDB();
                 log.RequestID = Activity.Current?.Id;
                 log.RequestTraceIdentifier = context.HttpContext.TraceIdentifier;
-                log.Fecha = DateTime.UtcNow;
+                log.Date = DateTime.UtcNow;
                 log.Controller = context.ActionDescriptor.RouteValues["controller"];
                 log.Endpoint = context.ActionDescriptor.DisplayName;
                 log.Message = context.Exception.Message;
                 log.StackTrace = context.Exception.StackTrace;
                 log.InnerException = context.Exception?.InnerException?.ToString() ?? "";
-                log.Ambiente = configuration["Env"]?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                log.Usuario = context.HttpContext.Request.Cookies["username"];
+                log.Environment = configuration["Env"]?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                log.User = context.HttpContext.Request.Cookies["username"];
                 log.Plataform = "API";
                 await _context.Log.AddAsync(log);
                 await _context.SaveChangesAsync();
