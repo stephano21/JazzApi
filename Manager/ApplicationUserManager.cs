@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -97,13 +99,12 @@ namespace JazzApi.Manager
             var plantilla = ConfirmEmailTemplate.Template($"Confirmacion de correo para {usuario.UserName}", callbackUrl,
                 "Confirma tu direccion de correo electronico en el sigueinte enlace!");
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
-            if(!DeliveredMail.Successful) return false;
+            if (!DeliveredMail.Successful) return false;
             return true;
         }
-
         public async Task<LoggedUser> LoginUserAsync(LoginDTO credencialesUsuario)
         {
-            if( string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
+            if (string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
             if (usuario != null && !usuario.Lock)
             {
@@ -119,55 +120,7 @@ namespace JazzApi.Manager
 
             throw new Exception("Credenciales Inválidas");
         }
-        private async Task<string> GenerateConfirmationUrlAsync(ApplicationUser user)
-        {
-            var SITE = Environment.GetEnvironmentVariable("SITE")?? configuration["SITE"];
-            var code = await GenerateEmailConfirmationTokenAsync(user);
-            var baseUrl = "";
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-            {
-                baseUrl = $"{SITE}";
-            }
-            else
-            {
-                // Construct the confirmation URL manually
-                //baseUrl = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
-                baseUrl = $"{SITE}";
 
-            }
-
-            return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
-        }
-        //private async Task<LoggedUser> ConstruirToken(LoginDTO credencialesUsuario)
-        //{
-        //    var usuario = await FindByNameAsync(credencialesUsuario.Username);
-        //    //realmente el claim seria username
-        //    var claims = new List<Claim>()
-        //    {
-        //        new Claim("Username", credencialesUsuario.Username),
-
-        //    };
-        //    // Obtener roles del usuario
-        //    var roles = await GetRolesAsync(usuario);
-        //    foreach (var rol in roles)
-        //    {
-        //        claims.Add(new Claim("Role", rol));
-        //    }
-
-        //    var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTKey"]));
-        //    var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
-        //    var expiracion = DateTime.UtcNow.AddDays(1);
-
-        //    var securtityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiracion, signingCredentials: creds);
-
-        //    return new LoggedUser()
-        //    {
-        //        AccessToken = new JwtSecurityTokenHandler().WriteToken(securtityToken),
-        //        Role = await GetRole(usuario),
-        //        Expiracion = expiracion,
-        //        Env = configuration["Env"]
-        //    };
-        //}
         public async Task<string> GetRole(ApplicationUser user)
         {
             try
@@ -193,6 +146,22 @@ namespace JazzApi.Manager
                 throw;
             }
         }
+        private async Task<string> GenerateConfirmationUrlAsync(ApplicationUser user)
+        {
+            var SITE = Environment.GetEnvironmentVariable("SITE") ?? configuration["SITE"];
+            var code = await GenerateEmailConfirmationTokenAsync(user);
+            var baseUrl = "";
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                baseUrl = $"{SITE}";
+            }
+            else
+            {
+                baseUrl = $"{SITE}";
+            }
+            code = WebUtility.UrlEncode(code);
+            return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
+        }
         public async Task<bool> ConfirmEmail(string userId, string code)
         {
             var user = await FindByIdAsync(userId);
@@ -200,6 +169,21 @@ namespace JazzApi.Manager
             var result = await ConfirmEmailAsync(user, code);
             if (result.Succeeded) return true;
             throw new Exception($"Error al confirmar el correo");
+        }
+        public async Task<bool> ResendEmailConfirmation(string Email)
+        {
+            var EmailAddress = new List<string>
+                    {
+                        Email,
+                    };
+            var usuario = await FindByEmailAsync(Email);
+            if (usuario == null) throw new Exception("Correo no registrado");
+            var callbackUrl = await GenerateConfirmationUrlAsync(usuario);
+            var plantilla = ConfirmEmailTemplate.Template($"Confirmacion de correo para {usuario.UserName}", callbackUrl,
+                "Confirma tu direccion de correo electronico en el sigueinte enlace!");
+            var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
+            if (!DeliveredMail.Successful) return false;
+            return true;
         }
         private async Task<LoggedUser> ConstruirTokenv2(LoginDTO credencialesUsuario)
         {
@@ -217,8 +201,8 @@ namespace JazzApi.Manager
                 claims.Add(new Claim("Role", rol));
             }
 
-            var llaveAcceso = new SymmetricSecurityKey(Encoding.UTF8.GetBytes( Environment.GetEnvironmentVariable("JWTKey")?? configuration["JWTKey"]));
-            var llaveActualizacion = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTRefreshKey") ?? configuration["JWTRefreshKey"] ));
+            var llaveAcceso = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTKey") ?? configuration["JWTKey"]));
+            var llaveActualizacion = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTRefreshKey") ?? configuration["JWTRefreshKey"]));
             var credsAcceso = new SigningCredentials(llaveAcceso, SecurityAlgorithms.HmacSha256);
             var credsActualizacion = new SigningCredentials(llaveActualizacion, SecurityAlgorithms.HmacSha256);
 
@@ -233,11 +217,11 @@ namespace JazzApi.Manager
                 {
                     Access_Token = new JwtSecurityTokenHandler().WriteToken(accessToken),
                     Refresh_Token = new JwtSecurityTokenHandler().WriteToken(refreshToken)
-                }, 
+                },
                 Username = credencialesUsuario.Username,
                 Role = await GetRole(usuario),
                 Expiracion = expiracion,
-                Env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")??configuration["Env"] 
+                Env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? configuration["Env"]
             };
         }
 

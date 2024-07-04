@@ -24,5 +24,7 @@ namespace JazzApi.Controllers.Auth
         public async Task<ActionResult> RegisterAsync([FromBody] RegisterDTO UserData) => Ok(await _userManager.RegisterUserAsync(UserData));
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)=> Ok(await _userManager.ConfirmEmail(userId, code));
+        [HttpPost("ConfirmEmail")]
+        public async Task<IActionResult> ForwardConfirmEmail(string Email) => Ok(await _userManager.ResendEmailConfirmation(Email));
     }
 }
