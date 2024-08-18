@@ -25,9 +25,9 @@ namespace JazzApi.DTOs.Auth
         [Required]
         public string Email { get; set; }
         public string Role { get; set; }="User";
-        public PorfileDTO Porfile { get; set; }
+        public ProfileDTO Profile { get; set; } = new ProfileDTO ();
     }
-    public class PorfileDTO
+    public class ProfileDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -37,6 +37,7 @@ namespace JazzApi.DTOs.Auth
     {
         public TokensDTO Auth { get; set; }
         public string Username { get; set; }
+        public string FullName { get; set; }
         public string Role { get; set; }
         public DateTime Expiracion { get; set; }
         public string Env { get; set; }
@@ -45,5 +46,11 @@ namespace JazzApi.DTOs.Auth
     {
         public string Access_Token { get; set; }
         public string Refresh_Token { get; set; }
+    }
+    public class ProfileViewDTO: ProfileDTO
+    {
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public string Couple { get; set; }
     }
 }

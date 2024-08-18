@@ -59,6 +59,7 @@ namespace JazzApi
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTKey") ?? Configuration["JWTKey"])),
                         ClockSkew = TimeSpan.Zero
                     });
+                Console.WriteLine("JWT -> Ready");
                 //HttpContextAccessor
                 services.AddHttpContextAccessor();
                 //DataProtectionTokenProviderOptions
@@ -75,6 +76,7 @@ namespace JazzApi
                 })
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
+                Console.WriteLine("IDENTITY (USER SYSTEM) -> Ready");
                 //Security on login
                 services.AddScoped<ApplicationUserManager>();
                 services.AddScoped<SignInManager<ApplicationUser>>();

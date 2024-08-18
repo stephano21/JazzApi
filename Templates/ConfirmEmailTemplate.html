@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Correo de ejemplo</title>
+    <style>
+        /* Estilos CSS para la tarjeta */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            margin: 0 auto;
+            background-color: #075F9D;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        #logo {
+            padding: 10px;
+            border-radius: 50%;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+        }
+
+        .contenido {
+            margin: 20px;
+        }
+
+        .content {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        #logo {
+            border-radius: 50%;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+        }
+
+        .banda-verde {
+            background-color: #ffffff;
+            /* Color verde */
+            padding: 0.4%;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.603);
+            text-align: left;
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            width: 100%;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .asunto {
+            color:#000000;
+        }
+
+        * {
+            font-family: 'Helvetica', sans-serif;
+            /* Utiliza una fuente minimalista */
+        }
+
+        .boton {
+            display: block;
+            background-color: #000000;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 10px;
+            /* Cambio de 50% a 10px para redondear las esquinas */
+        }
+
+
+        /* Estilos CSS para dispositivos móviles */
+        @media (max-width: 600px) {
+            .card {
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                background-color: #075F9D;
+            }
+
+            #logo {
+                width: 100%;
+                max-width: 200px;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class='card'>
+        <div class='logo-container'>
+            <img id='logo' src='https://cdn-icons-png.flaticon.com/512/6806/6806987.png' alt='Logo'>
+        </div>
+        <div class='banda-verde'>
+            <h2 class='asunto'>{title}</h2>
+        </div>
+        <div class='contenido'>
+            <p>{message}</p>
+            <a href='{url}' class='boton'>Confirmar Correo</a>
+        </div>
+        <footer class='footer'>
+            <div class='content'>
+                <p style='margin: 0;'>No responder a este correo</p>
+                <p style='margin: 0;'>&copy; Jazz &trade; Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

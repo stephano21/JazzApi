@@ -1,5 +1,6 @@
 ﻿using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
+using JazzApi.Helpers;
 using JazzApi.Templates;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace JazzApi.Manager
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly Services.MailService.MailService.MailRepository _mailManager;
+        private readonly ApplicationDbContext _contex;
         public ApplicationUserManager(IHttpContextAccessor httpContextAccessor,
            IConfiguration IConfiguration,
            SignInManager<ApplicationUser> signInManager,
@@ -34,7 +36,8 @@ namespace JazzApi.Manager
            IdentityErrorDescriber errors,
            IServiceProvider services,
            ILogger<UserManager<ApplicationUser>> logger,
-           RoleManager<IdentityRole> roleManager) :
+           RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext Context) :
            base(store,
                optionsAccessor,
                passwordHasher,
@@ -52,14 +55,15 @@ namespace JazzApi.Manager
             this.signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
             _mailManager = new Services.MailService.MailService.MailRepository(configuration);
+            _contex = Context;
 
         }
         public async Task<bool> RegisterUserAsync(RegisterDTO UserData)
         {
             UserData.UserName = UserData.UserName.Trim();
             UserData.Email = UserData.Email.Trim();
-            UserData.Porfile.LastName = UserData.Porfile.LastName.Trim();
-            UserData.Porfile.FirstName = UserData.Porfile.FirstName.Trim();
+            UserData.Profile.LastName = UserData.Profile.LastName.Trim();
+            UserData.Profile.FirstName = UserData.Profile.FirstName.Trim();
             if (await Users.Where(u => u.Email == UserData.Email).AnyAsync()) throw new Exception("El correo ingresado ya se está utilizando");
             if (await Users.Where(u => u.UserName == UserData.UserName).AnyAsync()) throw new Exception("El nombre de usuario debe ser unico");
             ApplicationUser usuario = new ApplicationUser
@@ -68,9 +72,9 @@ namespace JazzApi.Manager
                 Email = UserData.Email,
                 Profile = new Profile
                 {
-                    FirstName = UserData.Porfile.FirstName,
-                    LastName = UserData.Porfile.LastName,
-                    NickName = UserData.Porfile.NickName
+                    FirstName = UserData.Profile.FirstName,
+                    LastName = UserData.Profile.LastName,
+                    NickName = UserData.Profile.NickName
                 }
 
             };
@@ -96,8 +100,14 @@ namespace JazzApi.Manager
                     };
             var code = await GenerateEmailConfirmationTokenAsync(usuario);
             var callbackUrl = await GenerateConfirmationUrlAsync(usuario);
-            var plantilla = ConfirmEmailTemplate.Template($"Confirmacion de correo para {usuario.UserName}", callbackUrl,
-                "Confirma tu direccion de correo electronico en el sigueinte enlace!");
+            var Params = new Dictionary<string, string>
+            {
+                { "title", $"Confirmacion de correo para {usuario.UserName}" },
+                { "url", callbackUrl },
+                { "message", "Confirma tu direccion de correo electronico en el sigueinte enlace!" },
+            };
+            var plantilla = _mailManager.LoadEmailTemplate();
+            plantilla = _mailManager.PopulateTemplate(plantilla, Params);
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
             if (!DeliveredMail.Successful) return false;
             return true;
@@ -115,7 +125,7 @@ namespace JazzApi.Manager
                     return await ConstruirTokenv2(credencialesUsuario);
                 }
                 if (resultado.IsLockedOut) throw new Exception("Cuenta bloqueada temporalmente");
-                if (resultado.IsNotAllowed) throw new Exception("Valide su correo para luego iniciarsesion!");
+                if (resultado.IsNotAllowed) throw new Exception("Valide su correo para luego iniciar sesion!");
             }
 
             throw new Exception("Credenciales Inválidas");
@@ -150,6 +160,9 @@ namespace JazzApi.Manager
         {
             var SITE = Environment.GetEnvironmentVariable("SITE") ?? configuration["SITE"];
             var code = await GenerateEmailConfirmationTokenAsync(user);
+            var encryptionHelper = new EncryptionHelper(configuration);
+            var encryptedUserId = encryptionHelper.Encrypt(user.Id);
+            var encryptedCode = encryptionHelper.Encrypt(code);
             var baseUrl = "";
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
             {
@@ -159,8 +172,7 @@ namespace JazzApi.Manager
             {
                 baseUrl = $"{SITE}";
             }
-            code = WebUtility.UrlEncode(code);
-            return $"{baseUrl}/api/auth/ConfirmEmail?userId={user.Id}&code={code}";
+            return $"{baseUrl}/email/confirm?userId={WebUtility.UrlEncode(encryptedUserId)}&code={WebUtility.UrlEncode(encryptedCode)}";
         }
         public async Task<bool> ConfirmEmail(string userId, string code)
         {
@@ -179,8 +191,14 @@ namespace JazzApi.Manager
             var usuario = await FindByEmailAsync(Email);
             if (usuario == null) throw new Exception("Correo no registrado");
             var callbackUrl = await GenerateConfirmationUrlAsync(usuario);
-            var plantilla = ConfirmEmailTemplate.Template($"Confirmacion de correo para {usuario.UserName}", callbackUrl,
-                "Confirma tu direccion de correo electronico en el sigueinte enlace!");
+            var Params = new Dictionary<string, string>
+            {
+                { "title", $"Confirmacion de correo para {usuario.UserName}" },
+                { "url", callbackUrl },
+                { "message", "Confirma tu direccion de correo electronico en el sigueinte enlace!" },
+            };
+            var plantilla = _mailManager.LoadEmailTemplate();
+            plantilla = _mailManager.PopulateTemplate(plantilla, Params);
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
             if (!DeliveredMail.Successful) return false;
             return true;
@@ -188,11 +206,11 @@ namespace JazzApi.Manager
         private async Task<LoggedUser> ConstruirTokenv2(LoginDTO credencialesUsuario)
         {
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
-
+            var Profile = await _contex.Profile.FindAsync(usuario.Id);
             var claims = new List<Claim>()
-    {
-        new Claim("Username", credencialesUsuario.Username),
-    };
+            {
+                new Claim("Username", credencialesUsuario.Username),
+            };
 
             // Obtener roles del usuario
             var roles = await GetRolesAsync(usuario);
@@ -219,11 +237,26 @@ namespace JazzApi.Manager
                     Refresh_Token = new JwtSecurityTokenHandler().WriteToken(refreshToken)
                 },
                 Username = credencialesUsuario.Username,
+                FullName = $"{Profile?.FirstName} {Profile?.LastName}",
                 Role = await GetRole(usuario),
                 Expiracion = expiracion,
                 Env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? configuration["Env"]
             };
         }
+        public async Task<ProfileViewDTO> GetProfile(string Username)
+        {
+            var usuario = await FindByNameAsync(Username);
+            var UserData = await _contex.Profile.FindAsync(usuario.Id);
 
+            return new ProfileViewDTO
+            {
+                Email = usuario.Email,
+                UserName = Username,
+                FirstName = UserData.FirstName,
+                LastName = UserData.LastName,
+                NickName = UserData.NickName,
+                Couple= UserData.Couple?.LastName??"",
+            };
+        }
     }
 }

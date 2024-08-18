@@ -79,6 +79,22 @@ namespace JazzApi.Services.MailService
                     return new MailRepositoryResponse { Successful = false, Message = e.Message };
                 }
             }
+            public string LoadEmailTemplate()
+            {
+                var basePath = Directory.GetCurrentDirectory();
+                var templatePath = Path.GetFullPath(Path.Combine(basePath, "Templates", "ConfirmEmailTemplate.html"));
+                var template = File.ReadAllText(templatePath);
+                return template;
+            }
+            public string PopulateTemplate(string template, Dictionary<string, string> placeholders)
+            {
+                foreach (var placeholder in placeholders)
+                {
+                    template = template.Replace($"{{{placeholder.Key}}}", placeholder.Value);
+                }
+                return template;
+            }
+
         }
     }
 }

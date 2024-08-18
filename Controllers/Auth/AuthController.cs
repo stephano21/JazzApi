@@ -1,6 +1,8 @@
 ﻿using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
 using JazzApi.Manager;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +13,13 @@ namespace JazzApi.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly ApplicationUserManager _userManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         public AuthController( ApplicationUserManager ApplicationUserManager, 
             IConfiguration IConfiguration,
             IHttpContextAccessor httpContextAccessor)
         {
+            this.httpContextAccessor = httpContextAccessor;
             _userManager = ApplicationUserManager;
         }
         [HttpPost("login")]
@@ -26,5 +30,9 @@ namespace JazzApi.Controllers.Auth
         public async Task<IActionResult> ConfirmEmail(string userId, string code)=> Ok(await _userManager.ConfirmEmail(userId, code));
         [HttpPost("ConfirmEmail")]
         public async Task<IActionResult> ForwardConfirmEmail(string Email) => Ok(await _userManager.ResendEmailConfirmation(Email));
+        [HttpGet("Profile")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Profile() => Ok(await _userManager.GetProfile(httpContextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type == "Username").Value));
     }
 }
