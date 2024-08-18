@@ -174,8 +174,11 @@ namespace JazzApi.Manager
             }
             return $"{baseUrl}/email/confirm?userId={WebUtility.UrlEncode(encryptedUserId)}&code={WebUtility.UrlEncode(encryptedCode)}";
         }
-        public async Task<bool> ConfirmEmail(string userId, string code)
+        public async Task<bool> ConfirmEmail(string userIdEncript, string codeEncript)
         {
+            var encryptionHelper = new EncryptionHelper(configuration);
+            var userId = encryptionHelper.Decrypt(userIdEncript);
+            var code = encryptionHelper.Decrypt(codeEncript);
             var user = await FindByIdAsync(userId);
             if (user == null) throw new Exception("Usuario no encontrado");
             var result = await ConfirmEmailAsync(user, code);
