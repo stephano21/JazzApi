@@ -74,7 +74,8 @@ namespace JazzApi.Manager
                 {
                     FirstName = UserData.Profile.FirstName,
                     LastName = UserData.Profile.LastName,
-                    NickName = UserData.Profile.NickName
+                    NickName = UserData.Profile.NickName,
+                    SyncCode = Guid.NewGuid().ToString("N").Substring(0, 6),
                 }
 
             };
@@ -181,6 +182,7 @@ namespace JazzApi.Manager
             var code = encryptionHelper.Decrypt(codeEncript);
             var user = await FindByIdAsync(userId);
             if (user == null) throw new Exception("Usuario no encontrado");
+            if (user.EmailConfirmed) throw new Exception("Este codigo de verificacion ya fue utilizado!");
             var result = await ConfirmEmailAsync(user, code);
             if (result.Succeeded) return true;
             throw new Exception($"Error al confirmar el correo");
@@ -249,7 +251,7 @@ namespace JazzApi.Manager
         public async Task<ProfileViewDTO> GetProfile(string Username)
         {
             var usuario = await FindByNameAsync(Username);
-            var UserData = await _contex.Profile.FindAsync(usuario.Id);
+            var UserData = await _contex.Profile.Include(x=> x.Couple).Where(x=> x.UserId.Equals(usuario.Id)).FirstOrDefaultAsync();
 
             return new ProfileViewDTO
             {
@@ -258,8 +260,49 @@ namespace JazzApi.Manager
                 FirstName = UserData.FirstName,
                 LastName = UserData.LastName,
                 NickName = UserData.NickName,
-                Couple= UserData.Couple?.LastName??"",
+                Couple = $"{UserData.Couple?.FirstName ?? ""} {UserData.Couple?.LastName ?? "" }",
             };
         }
+        public async Task<string> GetOrRegisterSyncCode(string Username, bool Refresh = false)
+        {
+            var usuario = await FindByNameAsync(Username);
+            var UserData = await _contex.Profile.FindAsync(usuario.Id);
+            if (string.IsNullOrEmpty(UserData.SyncCode) || Refresh)
+            {
+                UserData.SyncCode = Guid.NewGuid().ToString("N").Substring(0, 6);
+                await _contex.SaveChangesAsync();
+            }
+
+            return UserData.SyncCode;
+        }
+        public async Task<string> RemoveCouple(string Username)
+        {
+            var usuario = await FindByNameAsync(Username);
+            var UserData = await _contex.Profile.FindAsync(usuario.Id);
+            if (!string.IsNullOrEmpty(UserData.SyncCode))
+            {
+                UserData.CoupleId =string.Empty;
+                await _contex.SaveChangesAsync();
+            }
+
+            return "Se Ha eliminado a su pareja con éxito!";
+        }
+        public async Task<string> SyncCouple(string Username, string PairCode)
+        {
+            if (string.IsNullOrEmpty(PairCode)|| (PairCode.Count()<6|| PairCode.Count() > 6)) throw new Exception("Ingrese un codigo Valifo");
+            var usuario = await FindByNameAsync(Username);
+            var Couple = await _contex.Profile.Where(x => x.SyncCode.Equals(PairCode)).FirstOrDefaultAsync();
+            var UserData = await _contex.Profile.FindAsync(usuario.Id);
+            if (Couple is null) throw new Exception("Invalid Pair Code");
+            if (!string.IsNullOrEmpty(UserData.CoupleId)) throw new Exception("Ya estás emparejado con un usuario, elimina tu pareja actual para continuar!");
+            if (!string.IsNullOrEmpty(Couple.CoupleId)) throw new Exception("El usuario ya está emparejado!");
+
+            UserData.CoupleId = Couple.UserId;
+            Couple.CoupleId = UserData.UserId;
+            await _contex.SaveChangesAsync();
+
+            return "Se ha emparejado con exito!";
+        }
+
     }
 }

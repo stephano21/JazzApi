@@ -2,5 +2,5 @@
 /obj*
 *.vs
 .env
-*/logs/
+logs/
 .config

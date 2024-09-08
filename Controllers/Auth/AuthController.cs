@@ -34,5 +34,17 @@ namespace JazzApi.Controllers.Auth
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Profile() => Ok(await _userManager.GetProfile(httpContextAccessor.HttpContext.User.Claims
                 .FirstOrDefault(c => c.Type == "Username").Value));
+        [HttpGet("Profile/Sync")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> SyncProfile(bool Refesh=false) => Ok(await _userManager.GetOrRegisterSyncCode(httpContextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type == "Username").Value, Refesh));
+        [HttpDelete("Profile/Sync")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ClearProfile() => Ok(await _userManager.RemoveCouple(httpContextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type == "Username").Value));
+        [HttpPost("Profile/Sync")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> PairCouple(string PairCode) => Ok(await _userManager.SyncCouple(httpContextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type == "Username").Value, PairCode));
     }
 }

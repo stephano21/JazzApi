@@ -13,6 +13,7 @@ namespace JazzApi.Entities.Auth
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
+        public string SyncCode { get; set; } = string.Empty;
         [ForeignKey("Couple")]
         public string CoupleId { get; set; }
         // Auto-relación para la pareja

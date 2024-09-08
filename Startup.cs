@@ -14,6 +14,9 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using JazzApi.Manager;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Hangfire;
+using Hangfire.PostgreSql;
+using JazzApi.Hangfire;
 
 namespace JazzApi
 {
@@ -160,6 +163,12 @@ namespace JazzApi
                     });
                 });
                 services.AddSignalR();
+                //HANGFIRE
+                services.AddHangfire(config =>
+                                     config.UsePostgreSqlStorage(c =>
+                                         c.UseNpgsqlConnection(Configuration.GetConnectionString("HangfireConnection"))));
+                services.AddHangfireServer();
+                services.AddSingleton<HangfireService>();
             }
             catch (Exception ex)
             {
@@ -168,7 +177,9 @@ namespace JazzApi
 
 
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+
+        [Obsolete]
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs,HangfireService hangfireService)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -181,6 +192,7 @@ namespace JazzApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHangfireDashboard();
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
@@ -190,6 +202,7 @@ namespace JazzApi
             {
                 endpoints.MapControllers();
             });
+            hangfireService.Start();
         }
     }
 }
