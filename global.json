@@ -1,0 +1,12 @@
+{
+  "sdk": {
+    "version": "8.0.400"
+  },
+  "runtimeOptions": {
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "8.0.8"
+    }
+  }
+}
+
