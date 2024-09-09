@@ -187,11 +187,14 @@ namespace JazzApi
         [Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs,HangfireService hangfireService)
         {
+            Console.WriteLine("Configurando servicios");
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 
+            Console.WriteLine("Antes de aplicar migraciones ");
                 var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
+            Console.WriteLine("Migrations success");
             }
 
             if (env.IsDevelopment())
