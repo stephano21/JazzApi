@@ -107,7 +107,7 @@ namespace JazzApi.Manager
                 { "url", callbackUrl },
                 { "message", "Confirma tu direccion de correo electronico en el sigueinte enlace!" },
             };
-            var plantilla = _mailManager.LoadEmailTemplate();
+            var plantilla = _mailManager.LoadEmailTemplate("ConfirmEmailTemplate");
             plantilla = _mailManager.PopulateTemplate(plantilla, Params);
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
             if (!DeliveredMail.Successful) return false;
@@ -202,7 +202,7 @@ namespace JazzApi.Manager
                 { "url", callbackUrl },
                 { "message", "Confirma tu direccion de correo electronico en el sigueinte enlace!" },
             };
-            var plantilla = _mailManager.LoadEmailTemplate();
+            var plantilla = _mailManager.LoadEmailTemplate("ConfirmEmailTemplate");
             plantilla = _mailManager.PopulateTemplate(plantilla, Params);
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
             if (!DeliveredMail.Successful) return false;
@@ -272,7 +272,6 @@ namespace JazzApi.Manager
                 UserData.SyncCode = Guid.NewGuid().ToString("N").Substring(0, 6);
                 await _contex.SaveChangesAsync();
             }
-
             return UserData.SyncCode;
         }
         public async Task<string> RemoveCouple(string Username)
@@ -281,28 +280,40 @@ namespace JazzApi.Manager
             var UserData = await _contex.Profile.FindAsync(usuario.Id);
             if (!string.IsNullOrEmpty(UserData.SyncCode))
             {
-                UserData.CoupleId =string.Empty;
+                var Couple = await _contex.Profile.Where(x => x.UserId.Equals(UserData.CoupleId)).FirstOrDefaultAsync();
+                UserData.CoupleId =null;
+                Couple.CoupleId =null;
                 await _contex.SaveChangesAsync();
             }
-
             return "Se Ha eliminado a su pareja con éxito!";
         }
         public async Task<string> SyncCouple(string Username, string PairCode)
         {
             if (string.IsNullOrEmpty(PairCode)|| (PairCode.Count()<6|| PairCode.Count() > 6)) throw new Exception("Ingrese un codigo Valifo");
             var usuario = await FindByNameAsync(Username);
-            var Couple = await _contex.Profile.Where(x => x.SyncCode.Equals(PairCode)).FirstOrDefaultAsync();
+            var Couple = await _contex.Profile.Include(x=> x.User).Where(x => x.SyncCode.Equals(PairCode)).FirstOrDefaultAsync();
             var UserData = await _contex.Profile.FindAsync(usuario.Id);
             if (Couple is null) throw new Exception("Invalid Pair Code");
             if (!string.IsNullOrEmpty(UserData.CoupleId)) throw new Exception("Ya estás emparejado con un usuario, elimina tu pareja actual para continuar!");
             if (!string.IsNullOrEmpty(Couple.CoupleId)) throw new Exception("El usuario ya está emparejado!");
-
             UserData.CoupleId = Couple.UserId;
             Couple.CoupleId = UserData.UserId;
             await _contex.SaveChangesAsync();
-
+            var EmailAddress = new List<string>
+                    {
+                        usuario.Email,
+                        Couple.User.Email,
+                    };
+            var Params = new Dictionary<string, string>
+            {
+                { "title", $"Confirmacion de correo para {usuario.UserName}" },
+                { "message", "Confirma tu direccion de correo electronico en el sigueinte enlace!" },
+            };
+            var plantilla = _mailManager.LoadEmailTemplate("PairCoupleTemplate");
+            plantilla = _mailManager.PopulateTemplate(plantilla, Params);
+            var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Confirm Account", plantilla);
+           
             return "Se ha emparejado con exito!";
         }
-
     }
 }

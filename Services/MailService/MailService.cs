@@ -79,10 +79,10 @@ namespace JazzApi.Services.MailService
                     return new MailRepositoryResponse { Successful = false, Message = e.Message };
                 }
             }
-            public string LoadEmailTemplate()
+            public string LoadEmailTemplate(string TemplateName)
             {
                 var basePath = Directory.GetCurrentDirectory();
-                var templatePath = Path.GetFullPath(Path.Combine(basePath, "Templates", "ConfirmEmailTemplate.html"));
+                var templatePath = Path.GetFullPath(Path.Combine(basePath, "Templates", $"{TemplateName}.html"));
                 var template = File.ReadAllText(templatePath);
                 return template;
             }

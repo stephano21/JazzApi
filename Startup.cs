@@ -153,7 +153,9 @@ namespace JazzApi
                    options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL")));
                     Console.WriteLine("prod");
                 }
+                Console.WriteLine("Pasando la conexion a la bd");
                 services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                Console.WriteLine("IActionContextAccessor");
                 //CORS
                 services.AddCors(opciones =>
                 {
@@ -162,13 +164,17 @@ namespace JazzApi
                         policy.WithOrigins("https://www.apirequest.io").AllowAnyMethod().AllowAnyHeader();
                     });
                 });
+                Console.WriteLine("CORS");
                 services.AddSignalR();
+                Console.WriteLine("AddSignalR");
                 //HANGFIRE
                 services.AddHangfire(config =>
                                      config.UsePostgreSqlStorage(c =>
                                          c.UseNpgsqlConnection(Configuration.GetConnectionString("HangfireConnection"))));
                 services.AddHangfireServer();
+                Console.WriteLine("AddHangfireServer");
                 services.AddSingleton<HangfireService>();
+                Console.WriteLine("Final start up");
             }
             catch (Exception ex)
             {
