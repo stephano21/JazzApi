@@ -5,7 +5,7 @@
   "runtimeOptions": {
     "framework": {
       "name": "Microsoft.NETCore.App",
-      "version": "8.0.8"
+      "version": "8.0.0"
     }
   }
 }
