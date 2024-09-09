@@ -178,6 +178,8 @@ namespace JazzApi
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Se calló"+ex.Message);
+                Console.WriteLine("Se calló"+ex.InnerException);
                 Log.Error(ex, "Error en ConfigureServices");
             }
 
