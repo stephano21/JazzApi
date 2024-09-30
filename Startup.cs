@@ -1,23 +1,22 @@
-﻿using Serilog;
-using Serilog.Events;
-using System.Reflection;
-using JazzApi.Filters;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
+﻿using Hangfire;
 using JazzApi.Entities.Auth;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi.Models;
-using JazzApi.Manager;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Hangfire;
-using Hangfire.PostgreSql;
+using JazzApi.Filters;
 using JazzApi.Hangfire;
-
+using JazzApi.Manager;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using System.Text;
+using System.Text.Json.Serialization;
+using Hangfire.PostgreSql;
 namespace JazzApi
 {
     public class Startup
@@ -178,8 +177,8 @@ namespace JazzApi
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Se calló"+ex.Message);
-                Console.WriteLine("Se calló"+ex.InnerException);
+                Console.WriteLine("Se calló" + ex.Message);
+                Console.WriteLine("Se calló" + ex.InnerException);
                 Log.Error(ex, "Error en ConfigureServices");
             }
 
@@ -187,16 +186,16 @@ namespace JazzApi
         }
 
         [Obsolete]
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs,HangfireService hangfireService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs, HangfireService hangfireService)
         {
             Console.WriteLine("Configurando servicios");
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                
-            Console.WriteLine("Antes de aplicar migraciones ");
+
+                Console.WriteLine("Antes de aplicar migraciones ");
                 var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-            Console.WriteLine("Migrations success");
+                Console.WriteLine("Migrations success");
             }
 
             if (env.IsDevelopment())

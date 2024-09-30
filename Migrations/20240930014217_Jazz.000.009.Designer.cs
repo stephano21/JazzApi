@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JazzApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240908213713_Jazz.0008")]
-    partial class Jazz0008
+    [Migration("20240930014217_Jazz.000.009")]
+    partial class Jazz000009
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -104,38 +104,48 @@ namespace JazzApi.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdLog"));
 
                     b.Property<string>("Controller")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Endpoint")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Environment")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("InnerException")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Plataform")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
                         .HasDefaultValue("API");
 
                     b.Property<string>("RequestID")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("RequestTraceIdentifier")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("StackTrace")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("User")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("IdLog");
@@ -149,18 +159,23 @@ namespace JazzApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CoupleId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("NickName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SyncCode")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("UserId");
@@ -168,6 +183,59 @@ namespace JazzApi.Migrations
                     b.HasIndex("CoupleId");
 
                     b.ToTable("Profile", "AUTH");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.CAT.TypeActivity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeleteIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DeleteUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypesActivity", "CAT");
                 });
 
             modelBuilder.Entity("JazzApi.Entities.Reto.TaskNotes", b =>
@@ -185,36 +253,45 @@ namespace JazzApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreateIP")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CreateUser")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DeleteIP")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DeleteUser")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdateIP")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateUser")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -222,6 +299,163 @@ namespace JazzApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TaskNotes", "CAT");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.Activity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeleteIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DeleteUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Frecuency")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Activities", "TRA");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.Goal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeleteIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DeleteUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdateIP")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateUser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Goals", "TRA");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.GoalActivity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ActivityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Counter")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("GoalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("GoalId");
+
+                    b.ToTable("GoalActivity", "TRA");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -360,7 +594,9 @@ namespace JazzApi.Migrations
                 {
                     b.HasOne("JazzApi.Entities.Auth.Profile", "Couple")
                         .WithMany()
-                        .HasForeignKey("CoupleId");
+                        .HasForeignKey("CoupleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JazzApi.Entities.Auth.ApplicationUser", "User")
                         .WithOne("Profile")
@@ -377,9 +613,52 @@ namespace JazzApi.Migrations
                 {
                     b.HasOne("JazzApi.Entities.Auth.Profile", "Profile")
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.Activity", b =>
+                {
+                    b.HasOne("JazzApi.Entities.CAT.TypeActivity", "TypeActivity")
+                        .WithMany("Activities")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TypeActivity");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.Goal", b =>
+                {
+                    b.HasOne("JazzApi.Entities.Auth.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.TRA.GoalActivity", b =>
+                {
+                    b.HasOne("JazzApi.Entities.TRA.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JazzApi.Entities.TRA.Goal", "Goal")
+                        .WithMany()
+                        .HasForeignKey("GoalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Goal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -442,6 +721,11 @@ namespace JazzApi.Migrations
             modelBuilder.Entity("JazzApi.Entities.Auth.Profile", b =>
                 {
                     b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("JazzApi.Entities.CAT.TypeActivity", b =>
+                {
+                    b.Navigation("Activities");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,5 +20,6 @@ namespace JazzApi.Entities.Auth
         public virtual Profile Couple { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<TaskNotes> Tasks { get; set; }
-    }
+        public string FullName() => $"{this.FirstName} {this.LastName}";
+    }   
 }
