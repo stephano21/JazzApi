@@ -46,5 +46,12 @@ namespace JazzApi.Controllers.Auth
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PairCouple(string PairCode) => Ok(await _userManager.SyncCouple(httpContextAccessor.HttpContext.User.Claims
                 .FirstOrDefault(c => c.Type == "Username").Value, PairCode));
+        [HttpGet("/")]
+        [AllowAnonymous]
+        public ActionResult RedirectAPI()
+        {
+            //return  RedirectToAction("Get", "Root");
+            return Redirect("swagger/");
+        }
     }
 }
