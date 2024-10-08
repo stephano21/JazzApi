@@ -20,22 +20,19 @@ namespace JazzApi
         public virtual DbSet<GoalActivity> GoalActivity { get; set; }
         public virtual DbSet<Activity> Activity { get; set; }
         public virtual DbSet<TypeActivity> TypeActivity { get; set; }
+        public virtual DbSet<Device> Device { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
             modelBuilder.Entity<ApplicationUser>()
             .ToTable("Users", "AUTH");
-
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UsersToken", "AUTH");
             modelBuilder.Entity<IdentityRole>().ToTable("Role", "AUTH");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim", "AUTH");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRole", "AUTH");
             modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim", "AUTH");
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin", "AUTH");
-
-           
 
             modelBuilder.Entity<LogDB>()
                 .Property(l => l.Plataform)

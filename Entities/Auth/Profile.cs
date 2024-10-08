@@ -1,4 +1,5 @@
-﻿using JazzApi.Entities.Reto;
+﻿using JazzApi.Entities.CAT;
+using JazzApi.Entities.Reto;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,6 +21,7 @@ namespace JazzApi.Entities.Auth
         public virtual Profile Couple { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<TaskNotes> Tasks { get; set; }
+        public virtual ICollection<Device> Devices { get; set; }
         public string FullName() => $"{this.FirstName} {this.LastName}";
     }   
 }
