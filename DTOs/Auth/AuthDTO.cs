@@ -11,6 +11,7 @@ namespace JazzApi.DTOs.Auth
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
+        public DeviceDTO Device { get; set; } = null;
     }
     public class RegisterDTO:UserDTO
     {

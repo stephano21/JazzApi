@@ -1,5 +1,7 @@
-﻿using JazzApi.DTOs.Auth;
+﻿using JazzApi.DTOs;
+using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
+using JazzApi.Entities.CAT;
 using JazzApi.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +9,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -114,8 +115,13 @@ namespace JazzApi.Manager
         }
         public async Task<LoggedUser> LoginUserAsync(LoginDTO credencialesUsuario)
         {
-            if (string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password)) throw new Exception("Credenciales Incompletas!");
+            if (string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password))
+                throw new Exception("Credenciales Incompletas!");
+           
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
+            credencialesUsuario.Device.UserId = usuario.Id;
+            if (credencialesUsuario.Device is not null)
+                await HandelInfoDevice(credencialesUsuario.Device);
             if (usuario != null && !usuario.Lock)
             {
                 var resultado = await signInManager.PasswordSignInAsync(credencialesUsuario.Username, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: true);
@@ -293,13 +299,13 @@ namespace JazzApi.Manager
             var Couple = await _contex.Profile.Include(x => x.User).Where(x => x.SyncCode.Equals(PairCode)).FirstOrDefaultAsync();
             var UserData = await _contex.Profile.FindAsync(usuario.Id);
             if (Couple is null) throw new Exception("Invalid Pair Code");
-            if(UserData.SyncCode.Equals(PairCode)) throw new Exception("Your self Invalid Pair Code");
+            if (UserData.SyncCode.Equals(PairCode)) throw new Exception("Your self Invalid Pair Code");
             if (!string.IsNullOrEmpty(UserData.CoupleId)) throw new Exception("Ya estás emparejado con un usuario, elimina tu pareja actual para continuar!");
             if (!string.IsNullOrEmpty(Couple.CoupleId)) throw new Exception("El usuario ya está emparejado!");
             UserData.CoupleId = Couple.UserId;
             Couple.CoupleId = UserData.UserId;
             await _contex.SaveChangesAsync();
-           
+
             var transmitter = new Dictionary<string, string>
             {
                 { "title", $"Emparejamiento exitoso" },
@@ -323,6 +329,35 @@ namespace JazzApi.Manager
             var plantilla = _mailManager.LoadEmailTemplate("PairCoupleTemplate");
             plantilla = _mailManager.PopulateTemplate(plantilla, Content);
             var DeliveredMail = await _mailManager.SendEmail(EmailAddress, "Couple Succes", plantilla);
+        }
+        public async Task HandelInfoDevice(DeviceDTO data)
+        {
+            var ExisteDevice = await _contex.Device.Where(x => x.UniqueId.Equals(data.UniqueId)).AnyAsync();
+            if (!ExisteDevice)
+            {
+                var NuevoDevice = new Device
+                {
+                    IdDevice = Guid.NewGuid(),
+                    UniqueId = data.UniqueId,
+                    Token = data.Token,
+                    Brand = data.Brand,
+                    Model = data.Model,
+                    SystemName = data.SystemName,
+                    SystemVersion = data.SystemVersion,
+                    BatteryLevel = data.BatteryLevel,
+                    IsCharging = data.IsCharging,
+                    IsRooted = data.IsRooted,
+                    LocationPermissionStatus = data.LocationPermissionStatus,
+                    CameraPermissionStatus = data.CameraPermissionStatus,
+                    NotificationPermissionStatus = data.NotificationPermissionStatus,
+                    ConnectionType = data.ConnectionType,
+                    IsConnected = data.IsConnected,
+                    UserId = data.UserId,
+                };
+                //NuevoDevice.Register("","");
+                await _contex.Device.AddAsync(NuevoDevice);
+                await _contex.SaveChangesAsync();
+            }
         }
     }
 }
