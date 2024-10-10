@@ -12,6 +12,7 @@
 	  <None Update="appsettings.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+	  <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
 	  <PackageReference Include="Hangfire" Version="1.8.0" />
 	  <PackageReference Include="Hangfire.AspNetCore" Version="1.8.0" />
 	  <PackageReference Include="Hangfire.PostgreSql" Version="1.20.9" />

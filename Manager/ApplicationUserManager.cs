@@ -3,6 +3,7 @@ using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
 using JazzApi.Entities.CAT;
 using JazzApi.Helpers;
+using JazzApi.Services.Notify;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -25,6 +26,7 @@ namespace JazzApi.Manager
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly Services.MailService.MailService.MailRepository _mailManager;
         private readonly ApplicationDbContext _contex;
+        private readonly FirebaseService _firebaseService;
         public ApplicationUserManager(IHttpContextAccessor httpContextAccessor,
            IConfiguration IConfiguration,
            SignInManager<ApplicationUser> signInManager,
@@ -57,6 +59,8 @@ namespace JazzApi.Manager
             _httpContextAccessor = httpContextAccessor;
             _mailManager = new Services.MailService.MailService.MailRepository(configuration);
             _contex = Context;
+            _firebaseService = new FirebaseService(IConfiguration);
+
 
         }
         public async Task<bool> RegisterUserAsync(RegisterDTO UserData)
@@ -131,6 +135,10 @@ namespace JazzApi.Manager
 
                 if (resultado.Succeeded)
                 {
+                    await _firebaseService.SendNotificationAsync(
+                        credencialesUsuario.Device.Token,
+                        "Inicio de sesión exitoso",
+                        $"Has iniciado sesion en {credencialesUsuario.Device.Brand} {credencialesUsuario.Device.Model} ");
                     return await ConstruirTokenv2(credencialesUsuario);
                 }
                 if (resultado.IsLockedOut) throw new Exception("Cuenta bloqueada temporalmente");

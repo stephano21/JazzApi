@@ -1,6 +1,7 @@
 ﻿using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
 using JazzApi.Manager;
+using JazzApi.Services.Notify;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,7 @@ namespace JazzApi.Controllers.Auth
     {
         private readonly ApplicationUserManager _userManager;
         private readonly IHttpContextAccessor httpContextAccessor;
-
+        
         public AuthController( ApplicationUserManager ApplicationUserManager, 
             IConfiguration IConfiguration,
             IHttpContextAccessor httpContextAccessor)
