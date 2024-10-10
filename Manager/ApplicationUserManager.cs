@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -117,7 +118,7 @@ namespace JazzApi.Manager
         {
             if (string.IsNullOrEmpty(credencialesUsuario.Username) || string.IsNullOrEmpty(credencialesUsuario.Password))
                 throw new Exception("Credenciales Incompletas!");
-           
+
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
             credencialesUsuario.Device.UserId = usuario.Id;
             if (credencialesUsuario.Device is not null)
@@ -332,8 +333,8 @@ namespace JazzApi.Manager
         }
         public async Task HandelInfoDevice(DeviceDTO data)
         {
-            var ExisteDevice = await _contex.Device.Where(x => x.UniqueId.Equals(data.UniqueId)).AnyAsync();
-            if (!ExisteDevice)
+            var ExisteDevice = await _contex.Device.Where(x => x.UniqueId.Equals(data.UniqueId)).FirstOrDefaultAsync();
+            if (ExisteDevice is not null)
             {
                 var NuevoDevice = new Device
                 {
@@ -356,8 +357,24 @@ namespace JazzApi.Manager
                 };
                 //NuevoDevice.Register("","");
                 await _contex.Device.AddAsync(NuevoDevice);
-                await _contex.SaveChangesAsync();
             }
+            else
+            {
+                ExisteDevice.Token = data.Token;
+                ExisteDevice.Brand = data.Brand;
+                ExisteDevice.Model = data.Model;
+                ExisteDevice.SystemName = data.SystemName;
+                ExisteDevice.SystemVersion = data.SystemVersion;
+                ExisteDevice.BatteryLevel = data.BatteryLevel;
+                ExisteDevice.IsCharging = data.IsCharging;
+                ExisteDevice.IsRooted = data.IsRooted;
+                ExisteDevice.LocationPermissionStatus = data.LocationPermissionStatus;
+                ExisteDevice.CameraPermissionStatus = data.CameraPermissionStatus;
+                ExisteDevice.NotificationPermissionStatus = data.NotificationPermissionStatus;
+                ExisteDevice.ConnectionType = data.ConnectionType;
+                ExisteDevice.IsConnected = data.IsConnected;
+            }
+            await _contex.SaveChangesAsync();
         }
     }
 }

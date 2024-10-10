@@ -10,6 +10,9 @@ namespace JazzApi.Entities.CAT
         [Key]
         public Guid IdDevice { get; set; }
         public string UniqueId { get; set; }            // Identificador único del dispositivo
+        /// <summary>
+        /// Token de Firebase Cloud Messaging (FCM)
+        /// </summary>
         public string Token { get; set; }
         public string Brand { get; set; }               // Marca del dispositivo (ej. Apple, Samsung)
         public string Model { get; set; }               // Modelo del dispositivo (ej. iPhone 12, Galaxy S21)
