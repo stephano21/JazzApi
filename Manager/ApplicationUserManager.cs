@@ -75,12 +75,13 @@ namespace JazzApi.Manager
                 {
                     FirstName = UserData.Profile.FirstName,
                     LastName = UserData.Profile.LastName,
-                    NickName = UserData.Profile.NickName,
+                    NickName = UserData.Profile.NickName??"",
                     SyncCode = Guid.NewGuid().ToString("N").Substring(0, 6),
+                    //CoupleId="",
                 }
 
             };
-
+            usuario.Profile.UserId = usuario.Id;
             if (!(await CreateAsync(usuario, UserData.Password)).Succeeded) return false;
             // Verificar si el rol existe, y si no existe, crearlo
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -120,11 +121,12 @@ namespace JazzApi.Manager
                 throw new Exception("Credenciales Incompletas!");
 
             var usuario = await FindByNameAsync(credencialesUsuario.Username);
-            credencialesUsuario.Device.UserId = usuario.Id;
-            if (credencialesUsuario.Device is not null)
-                await HandelInfoDevice(credencialesUsuario.Device);
+            if (usuario is null) throw new Exception("Usuario no encontrado!");
             if (usuario != null && !usuario.Lock)
             {
+                credencialesUsuario.Device.UserId = usuario.Id;
+                if (credencialesUsuario.Device is not null)
+                    await HandelInfoDevice(credencialesUsuario.Device);
                 var resultado = await signInManager.PasswordSignInAsync(credencialesUsuario.Username, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: true);
 
                 if (resultado.Succeeded)
@@ -334,7 +336,7 @@ namespace JazzApi.Manager
         public async Task HandelInfoDevice(DeviceDTO data)
         {
             var ExisteDevice = await _contex.Device.Where(x => x.UniqueId.Equals(data.UniqueId)).FirstOrDefaultAsync();
-            if (ExisteDevice is not null)
+            if (ExisteDevice is null)
             {
                 var NuevoDevice = new Device
                 {

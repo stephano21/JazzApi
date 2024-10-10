@@ -31,7 +31,7 @@ namespace JazzApi.Hangfire
                 if (Debugger.IsAttached)
                 {
                     //RecurringJob.AddOrUpdate("Recargar Página", () => this.CargarSitio(), "*/4 * * * *");
-                    RecurringJob.AddOrUpdate("Recargar Factura", () => this.CargarFacturas(), "*/10 * * * *");
+                    //RecurringJob.AddOrUpdate("Recargar Factura", () => this.CargarFacturas(), "*/10 * * * *");
                     
                 }
             }
