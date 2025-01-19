@@ -31,6 +31,7 @@ namespace JazzApi
         {
             try
             {
+                services.RegisterBusinessServices();
                 // Configure Filters
                 services.AddControllers(opciones =>
                 {

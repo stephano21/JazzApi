@@ -1,11 +1,12 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using JazzApi.Interfaces;
 
 namespace JazzApi.Services.MailService
 {
     public class MailService
     {
-        public class MailRepository
+        public class MailRepository: IMailRepository
         {
             private readonly SmtpClient _mailClient;
             private readonly string _username;
@@ -94,6 +95,7 @@ namespace JazzApi.Services.MailService
                 }
                 return template;
             }
+
 
         }
     }

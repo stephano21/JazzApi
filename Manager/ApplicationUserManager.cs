@@ -3,6 +3,7 @@ using JazzApi.DTOs.Auth;
 using JazzApi.Entities.Auth;
 using JazzApi.Entities.CAT;
 using JazzApi.Helpers;
+using JazzApi.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -23,7 +24,7 @@ namespace JazzApi.Manager
         private readonly IConfiguration configuration;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly Services.MailService.MailService.MailRepository _mailManager;
+        private readonly IMailRepository _mailManager;
         private readonly ApplicationDbContext _contex;
         public ApplicationUserManager(IHttpContextAccessor httpContextAccessor,
            IConfiguration IConfiguration,
@@ -38,7 +39,8 @@ namespace JazzApi.Manager
            IServiceProvider services,
            ILogger<UserManager<ApplicationUser>> logger,
            RoleManager<IdentityRole> roleManager,
-            ApplicationDbContext Context) :
+            ApplicationDbContext Context,
+            IMailRepository IMailRepository) :
            base(store,
                optionsAccessor,
                passwordHasher,
@@ -55,7 +57,7 @@ namespace JazzApi.Manager
             this.services = services;
             this.signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
-            _mailManager = new Services.MailService.MailService.MailRepository(configuration);
+            _mailManager = IMailRepository;
             _contex = Context;
 
         }
@@ -124,9 +126,12 @@ namespace JazzApi.Manager
             if (usuario is null) throw new Exception("Usuario no encontrado!");
             if (usuario != null && !usuario.Lock)
             {
-                credencialesUsuario.Device.UserId = usuario.Id;
                 if (credencialesUsuario.Device is not null)
-                    await HandelInfoDevice(credencialesUsuario.Device);
+                {
+                    credencialesUsuario.Device.UserId = usuario.Id;
+                    if (credencialesUsuario.Device is not null)
+                        await HandelInfoDevice(credencialesUsuario.Device);
+                }
                 var resultado = await signInManager.PasswordSignInAsync(credencialesUsuario.Username, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: true);
 
                 if (resultado.Succeeded)
