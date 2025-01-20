@@ -11,6 +11,7 @@ namespace JazzApi
             {
                 services.AddScoped<IMailRepository, MailRepository>();
                 services.AddScoped<IActivities, ActivitiesManager>();
+                services.AddScoped<ITypeActivities, TypeActivitiesManager>();
                 return services;
             }
         }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JazzApi.Controllers.Goal
 {
     [Route("api/activities")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ActivitiesController : ControllerBase
     {
         // GET: ActivitiesController
