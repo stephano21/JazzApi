@@ -40,22 +40,7 @@ namespace JazzApi.Hangfire
         //[DisableMultipleQueuedItemsFilter]
         public async Task CargarFacturas()
         {
-            if (Debugger.IsAttached)
-            {
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    //var fechaImplementacion = new DateTime(2023, 10, 1); // fecha para prueba
-                    var fechaImplementacion = new DateTime(2023, 12, 6);
-                    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                    var servicio = new TaskManager(dbContext,"HangFire","","hangfire");
-                    var Nuevo = new TaskDTO
-                    {
-                        Title = "Handd",
-                        Description = "kosdfisdufv"
-                    };
-                    await servicio.Save(Nuevo);
-                }
-            }
+           
         }
 
     }

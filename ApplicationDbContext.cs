@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using JazzApi.Entities.Auth;
-using JazzApi.Entities.Reto;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using JazzApi.Entities.TRA;
 using JazzApi.Entities.CAT;
@@ -15,7 +14,6 @@ namespace JazzApi
         }
         public virtual DbSet<LogDB> Log { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
-        public virtual DbSet<TaskNotes> TaskNotes { get; set; }
         public virtual DbSet<Goal> Goal { get; set; }
         public virtual DbSet<GoalActivity> GoalActivity { get; set; }
         public virtual DbSet<Activity> Activity { get; set; }
